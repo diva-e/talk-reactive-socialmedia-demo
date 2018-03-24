@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class TweetImporter {
@@ -35,7 +36,7 @@ public class TweetImporter {
 
     private Tweet generateRandomTweet() {
         String username = "sombrero83";
-        String text = "bla fasel " + LocalDateTime.now();
+        String text = ThreadLocalRandom.current().nextInt() + " new tweet text with timestamp " + LocalDateTime.now();
         return new Tweet(username, text);
     }
 
