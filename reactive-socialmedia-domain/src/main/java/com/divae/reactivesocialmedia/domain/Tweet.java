@@ -1,11 +1,15 @@
 package com.divae.reactivesocialmedia.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Tweet {
 
     private final String username;
     private final String text;
 
-    public Tweet(String username, String text) {
+    @JsonCreator
+    public Tweet(@JsonProperty("username") String username, @JsonProperty("text") String text) {
         this.username = username;
         this.text = text;
     }
@@ -18,4 +22,11 @@ public class Tweet {
         return text;
     }
 
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "username='" + username + '\'' +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }
