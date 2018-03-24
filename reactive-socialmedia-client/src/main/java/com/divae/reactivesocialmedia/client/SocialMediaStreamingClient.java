@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class SocialMediaStreamingClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(SocialMediaStreamingClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SocialMediaStreamingClient.class);
 
     @PostConstruct
     public void consumeTweetsInRealtime() {
@@ -22,8 +22,9 @@ public class SocialMediaStreamingClient {
                 .accept(MediaType.APPLICATION_STREAM_JSON)
                 .retrieve()
                 .bodyToFlux(Tweet.class)
+                .doOnNext(tweet -> LOG.info("Received new tweet: {}", tweet))
                 .log()
-                .subscribe(tweet -> logger.debug("Received tweet: {}", tweet));
+                .blockLast();
     }
 
 }

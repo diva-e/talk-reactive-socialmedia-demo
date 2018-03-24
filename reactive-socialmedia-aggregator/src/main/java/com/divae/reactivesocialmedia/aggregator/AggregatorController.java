@@ -18,13 +18,13 @@ public class AggregatorController {
 
     @GetMapping(path = "/tweets")
     public Flux<Tweet> getTweets() {
-        return this.tweetRepository.findAll().log();
+        return this.tweetRepository.findTweetsBy().log();
     }
 
-    @PostMapping(path="/tweets", consumes = "application/stream+json")
+    @PostMapping(path="/tweets", consumes = MediaType.APPLICATION_STREAM_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Void> saveTweets(@RequestBody Flux<Tweet> tweets) {
-        return tweetRepository.save(tweets).then();
+        return tweetRepository.insert(tweets).then();
     }
 
 }
